@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeBookingButtons();
     initializeServiceButtons();
     setupNavigation();
+    init();
 });
 
 function initializeBookingButtons() {
@@ -206,4 +207,161 @@ style.textContent = `
         font-size: 18px;
     }
 `;
-document.head.appendChild(style); 
+document.head.appendChild(style);
+
+// DOM Elements
+const searchInput = document.querySelector('.search-bar input');
+const searchButton = document.querySelector('.search-bar button');
+const mainNav = document.querySelector('.main-nav');
+const mobileMenuButton = document.createElement('button');
+const topBar = document.querySelector('.top-bar');
+const heroSection = document.querySelector('.hero');
+const serviceCards = document.querySelectorAll('.service-card');
+const eventCards = document.querySelectorAll('.event-card');
+
+// Mobile Menu Toggle
+function createMobileMenu() {
+    mobileMenuButton.innerHTML = '<i class="fas fa-bars"></i>';
+    mobileMenuButton.className = 'mobile-menu-button';
+    mobileMenuButton.setAttribute('aria-label', 'Toggle Menu');
+    document.querySelector('.header-content').appendChild(mobileMenuButton);
+
+    mobileMenuButton.addEventListener('click', () => {
+        mainNav.classList.toggle('active');
+        mobileMenuButton.classList.toggle('active');
+    });
+}
+
+// Search Functionality
+function setupSearch() {
+    searchButton.addEventListener('click', () => {
+        const searchTerm = searchInput.value.trim();
+        if (searchTerm) {
+            // In a real implementation, this would make an API call
+            console.log('Searching for:', searchTerm);
+            // For demo purposes, we'll just show an alert
+            alert(`Searching for: ${searchTerm}`);
+        }
+    });
+
+    searchInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            searchButton.click();
+        }
+    });
+}
+
+// Smooth Scrolling for Navigation Links
+function setupSmoothScrolling() {
+    document.querySelectorAll('.main-nav a').forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const targetId = link.getAttribute('href').substring(1);
+            const targetElement = document.getElementById(targetId);
+            
+            if (targetElement) {
+                targetElement.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+}
+
+// Card Hover Effects
+function setupCardHoverEffects() {
+    serviceCards.forEach(card => {
+        card.addEventListener('mouseenter', () => {
+            card.style.transform = 'translateY(-5px)';
+            card.style.boxShadow = '0 5px 15px rgba(0,0,0,0.1)';
+        });
+
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'translateY(0)';
+            card.style.boxShadow = '0 2px 5px rgba(0,0,0,0.1)';
+        });
+    });
+
+    eventCards.forEach(card => {
+        card.addEventListener('mouseenter', () => {
+            card.style.transform = 'translateY(-5px)';
+            card.style.boxShadow = '0 5px 15px rgba(0,0,0,0.1)';
+        });
+
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'translateY(0)';
+            card.style.boxShadow = '0 2px 5px rgba(0,0,0,0.1)';
+        });
+    });
+}
+
+// Dynamic Content Loading
+function setupDynamicContent() {
+    // Simulate loading featured services
+    const services = [
+        {
+            icon: 'fa-heartbeat',
+            title: 'Health & Wellness',
+            description: 'Access to health resources and wellness programs'
+        },
+        {
+            icon: 'fa-home',
+            title: 'Home Care',
+            description: 'Professional assistance with daily activities'
+        },
+        {
+            icon: 'fa-calendar-alt',
+            title: 'Events',
+            description: 'Community events and social gatherings'
+        }
+    ];
+
+    // Simulate loading upcoming events
+    const events = [
+        {
+            month: 'JUN',
+            day: '15',
+            title: 'Community Social',
+            description: 'Join us for an afternoon of socializing and light refreshments'
+        },
+        {
+            month: 'JUN',
+            day: '20',
+            title: 'Health & Wellness Workshop',
+            description: 'Learn about maintaining a healthy lifestyle'
+        }
+    ];
+}
+
+// Accessibility Features
+function setupAccessibility() {
+    // Add keyboard navigation
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Tab') {
+            document.body.classList.add('keyboard-navigation');
+        }
+    });
+
+    document.addEventListener('mousedown', () => {
+        document.body.classList.remove('keyboard-navigation');
+    });
+
+    // Add ARIA labels
+    const buttons = document.querySelectorAll('button');
+    buttons.forEach(button => {
+        if (!button.getAttribute('aria-label')) {
+            button.setAttribute('aria-label', button.textContent);
+        }
+    });
+}
+
+// Initialize all functionality
+function init() {
+    createMobileMenu();
+    setupSearch();
+    setupSmoothScrolling();
+    setupCardHoverEffects();
+    setupDynamicContent();
+    setupAccessibility();
+} 
