@@ -318,7 +318,47 @@ button:focus, a:focus {
     outline-offset: 2px;
 }
 
+/* Mobile Menu Button */
+.mobile-menu-button {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: var(--aarp-red);
+    cursor: pointer;
+    padding: 10px;
+}
+
+/* Mobile Navigation */
 @media (max-width: 768px) {
+    .mobile-menu-button {
+        display: block;
+    }
+
+    .main-nav {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background-color: white;
+        z-index: 1000;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .main-nav.active {
+        display: block;
+    }
+
+    .main-nav ul {
+        flex-direction: column;
+        padding: 20px;
+    }
+
+    .main-nav li {
+        margin: 10px 0;
+    }
+
     .header-content {
         flex-direction: column;
         gap: 20px;
@@ -328,13 +368,65 @@ button:focus, a:focus {
         width: 100%;
     }
 
-    .main-nav ul {
-        flex-direction: column;
-        align-items: center;
-        gap: 10px;
-    }
-
     .services-grid, .events-grid {
         grid-template-columns: 1fr;
     }
+}
+
+/* Search Bar Enhancements */
+.search-bar {
+    position: relative;
+}
+
+.search-bar input:focus {
+    outline: 2px solid var(--aarp-red);
+    outline-offset: 2px;
+}
+
+/* Card Animations */
+.service-card, .event-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Keyboard Navigation */
+.keyboard-navigation *:focus {
+    outline: 3px solid var(--aarp-red);
+    outline-offset: 2px;
+}
+
+/* Loading States */
+.loading {
+    position: relative;
+    opacity: 0.7;
+}
+
+.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 30px;
+    height: 30px;
+    margin: -15px 0 0 -15px;
+    border: 3px solid var(--aarp-light-red);
+    border-top-color: var(--aarp-red);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Accessibility Improvements */
+[aria-hidden="true"] {
+    display: none;
+}
+
+/* Focus States */
+button:focus, a:focus, input:focus {
+    outline: 3px solid var(--aarp-red);
+    outline-offset: 2px;
 } 
